@@ -53,7 +53,6 @@ const userSchema = new mongoose.Schema(
   { timestamp: true }
 );
 
-// virtual field, doesn't exist in database. hash the password and save in the db as hashed password only
 userSchema
   .virtual('password')
   .set(function (password) {
