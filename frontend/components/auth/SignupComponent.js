@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { signup } from '../../actions/auth';
 
 const SignupComponent = () => {
   const [values, setValues] = useState({
@@ -13,9 +14,29 @@ const SignupComponent = () => {
 
   const { name, email, password, error, loading, message, showForm } = values;
 
+  // create a new user
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.table({ name, email, password, error, loading, message, showForm });
+    // console.table({ name, email, password, error, loading, message, showForm });
+    setValues({ ...values, loading: true, error: false });
+    const user = { name, email, password };
+
+    signup(user).then((data) => {
+      if (data.error) {
+        setValues({ ...values, error: data.error, loading: false });
+      } else {
+        // clear the input fields
+        setValues({
+          ...values,
+          name: '',
+          email: '',
+          password: '',
+          loading: false,
+          message: data.message,
+          showForm: false,
+        });
+      }
+    });
   };
 
   const handleChange = (name) => (e) => {
@@ -25,7 +46,7 @@ const SignupComponent = () => {
   const signUpForm = () => {
     return (
       <form onSubmit={handleSubmit}>
-        <div className='font-group'>
+        <div className='form-group'>
           <input
             type='text'
             className='form-control'

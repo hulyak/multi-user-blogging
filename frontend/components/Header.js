@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { APP_NAME } from '../config';
 import Link from 'next/link';
 import {
   Collapse,
@@ -19,7 +20,7 @@ const Header = (props) => {
     <div>
       <Navbar color='light' light expand='md'>
         <Link href='/'>
-          <NavLink className='font-weight-bold'>Skynet Blog</NavLink>
+          <NavLink className='font-weight-bold'>{APP_NAME}</NavLink>
         </Link>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
