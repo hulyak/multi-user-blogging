@@ -22,6 +22,8 @@ const SignupComponent = () => {
     const user = { name, email, password };
 
     signup(user).then((data) => {
+      console.log(data);
+      debugger;
       if (data.error) {
         setValues({ ...values, error: data.error, loading: false });
       } else {
@@ -43,6 +45,15 @@ const SignupComponent = () => {
     setValues({ ...values, error: false, [name]: e.target.value });
   };
 
+  const showLoading = () =>
+    loading && <div className='alert alert-info'>Loading...</div>;
+
+  const showError = () =>
+    error && <div className='alert alert-danger'>{error}</div>;
+
+  const showMessage = () =>
+    message && <div className='alert alert-info'>{message}</div>;
+
   const signUpForm = () => {
     return (
       <form onSubmit={handleSubmit}>
@@ -55,7 +66,7 @@ const SignupComponent = () => {
             value={name}
           />
         </div>
-        <div className='font-group'>
+        <div className='form-group'>
           <input
             type='email'
             className='form-control'
@@ -64,7 +75,7 @@ const SignupComponent = () => {
             value={email}
           />
         </div>
-        <div className='font-group'>
+        <div className='form-group'>
           <input
             type='password'
             className='form-control'
@@ -79,7 +90,14 @@ const SignupComponent = () => {
       </form>
     );
   };
-  return <>{signUpForm()}</>;
+  return (
+    <>
+      {showError()}
+      {showLoading()}
+      {showMessage()}
+      {showForm && signUpForm()}
+    </>
+  );
 };
 
 export default SignupComponent;

@@ -10,6 +10,8 @@ export const signup = (user) => {
     },
     body: JSON.stringify(user),
   })
-    .then((response) => response.json()) // handle the response from SignupComponent
+    .then((response) => {
+      return response.json(); // handle the response from }SignupComponent
+    })
     .catch((err) => console.log(err));
 };

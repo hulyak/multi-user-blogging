@@ -62,8 +62,7 @@ exports.signout = (req, res) => {
 };
 
 //  protected routes with middleware
-exports.requireSignin = (req, res) =>
-  expressJwt({
-    secret: process.env.JWT_SECRET,
-    algorithms: ['RS256'],
-  });
+exports.requireSignin = expressJwt({
+  secret: process.env.JWT_SECRET,
+  algorithms: ['RS256'],
+});

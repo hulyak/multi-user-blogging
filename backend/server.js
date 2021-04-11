@@ -36,7 +36,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // routes middleware
 app.use('/api', blogRoutes);
-app.use('/auth', authRoutes);
+app.use('/api', authRoutes);
 
 const port = process.env.PORT || 8000;
 
