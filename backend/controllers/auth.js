@@ -55,3 +55,15 @@ exports.signin = (req, res) => {
     });
   });
 };
+
+exports.signout = (req, res) => {
+  res.clearCookie('token');
+  res.json({ message: 'Signout successfully' });
+};
+
+//  protected routes with middleware
+exports.requireSignin = (req, res) =>
+  expressJwt({
+    secret: process.env.JWT_SECRET,
+    algorithms: ['RS256'],
+  });
