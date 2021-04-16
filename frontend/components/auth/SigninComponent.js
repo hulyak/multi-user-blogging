@@ -1,40 +1,33 @@
 import { useState } from 'react';
-import { signup } from '../../actions/auth';
+import { signin, authenticate } from '../../actions/auth';
+import { useRouter } from 'next/router';
 
-const SignupComponent = () => {
+const SigninComponent = () => {
+  const router = useRouter();
   const [values, setValues] = useState({
-    name: '',
     email: '',
     password: '',
     error: '',
-
     loading: false,
     message: '',
     showForm: true,
   });
 
-  const { name, email, password, error, loading, message, showForm } = values;
+  const { email, password, error, loading, message, showForm } = values;
 
-  // create a new user
+  // save user information
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.table({ name, email, password, error, loading, message, showForm });
     setValues({ ...values, loading: true, error: false });
-    const user = { name, email, password };
+    const user = { email, password };
 
-    signup(user).then((data) => {
+    signin(user).then((data) => {
       if (data.error) {
         setValues({ ...values, error: data.error, loading: false });
       } else {
-        // clear the input fields
-        setValues({
-          ...values,
-          name: '',
-          email: '',
-          password: '',
-          loading: false,
-          message: data.message,
-          showForm: false,
+        authenticate(data, () => {
+          // redirect to home page
+          router.push(`/`);
         });
       }
     });
@@ -53,18 +46,9 @@ const SignupComponent = () => {
   const showMessage = () =>
     message && <div className='alert alert-info'>{message}</div>;
 
-  const signUpForm = () => {
+  const signInForm = () => {
     return (
       <form onSubmit={handleSubmit}>
-        <div className='form-group'>
-          <input
-            type='text'
-            className='form-control'
-            placeholder='type your name'
-            onChange={handleChange('name')}
-            value={name}
-          />
-        </div>
         <div className='form-group'>
           <input
             type='email'
@@ -94,9 +78,9 @@ const SignupComponent = () => {
       {showError()}
       {showLoading()}
       {showMessage()}
-      {showForm && signUpForm()}
+      {showForm && signInForm()}
     </>
   );
 };
 
-export default SignupComponent;
+export default SigninComponent;
