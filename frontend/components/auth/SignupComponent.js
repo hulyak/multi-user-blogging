@@ -3,10 +3,11 @@ import { signup } from '../../actions/auth';
 
 const SignupComponent = () => {
   const [values, setValues] = useState({
-    name: 'hulya',
-    email: 'test@gmail.com',
-    password: 'sdsfs',
+    name: '',
+    email: '',
+    password: '',
     error: '',
+
     loading: false,
     message: '',
     showForm: true,
