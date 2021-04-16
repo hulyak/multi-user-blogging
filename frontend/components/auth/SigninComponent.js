@@ -31,7 +31,10 @@ const SigninComponent = () => {
       } else {
         authenticate(data, () => {
           // redirect to home page
-          router.push(`/`);
+          if (isAuth() && isAuth().role === 1) {
+            router.push(`/admin`);
+          }
+          router.push('/user');
         });
       }
     });
